@@ -2,13 +2,15 @@ import sys
 from Day1.day1 import Day1
 from Day2.day2 import Day2
 from Day3.day3 import Day3
+from Day4.day4 import Day4
+
 
 days = {
     1: Day1(),
     2: Day2(),
     3: Day3(),
+    4: Day4(),
 }
-
 
 
 def get_solutions(day):
@@ -19,7 +21,6 @@ def get_solutions(day):
     else:
         a, b = day.get_solutions()
         print(f'{a}\n{b}')
-
 
 
 if __name__ == '__main__':
