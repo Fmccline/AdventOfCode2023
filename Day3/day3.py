@@ -8,9 +8,6 @@ class Day3(Day):
 
     def get_solution_a(self, input_data):
         schematic = input_data
-        # remove \n from end of each line
-        for row in range(len(schematic) - 1):
-            schematic[row] = schematic[row][:-1]
         # scan for a number
         # get full length of number
         # for each digit
@@ -74,10 +71,64 @@ class Day3(Day):
         return has_symbol
 
     def get_solution_b(self, input_data):
-        pass
+        gear_ratios = 0
+        schematic = input_data
+        numbers, potential_gears = self.get_numbers_and_potential_gears(schematic)
+        for row, col in potential_gears:
+            gears = []
+            # top mid
+            point = (row - 1, col)
+            if point in numbers.keys():
+                gears.append(numbers[point])
+            # else check top left and right
+            else:
+                points = [(row - 1, col - 1), (row - 1, col + 1)]
+                gears = self.check_for_gears(points, numbers, gears)
+            # bottom mid
+            point = (row + 1, col)
+            if point in numbers.keys():
+                gears.append(numbers[point])
+            # bottom left and right
+            else:
+                points = [(row + 1, col - 1), (row + 1, col + 1)]
+                gears = self.check_for_gears(points, numbers, gears)
+            # left and right
+            points = [(row, col - 1), (row, col + 1)]
+            gears = self.check_for_gears(points, numbers, gears)
+            if len(gears) == 2:
+                gear_ratios += gears[0] * gears[1]
+        return gear_ratios
+    
+
+    def check_for_gears(self, points, numbers, gears):
+        for point in points:
+            if point in numbers.keys():
+                gears.append(numbers[point])
+        return gears
+
+
+    def get_numbers_and_potential_gears(self, schematic):
+        numbers = {}
+        potential_gears = []
+        row = 0
+        while row < len(schematic):
+            col = 0
+            while col < len(schematic[row]):
+                char = schematic[row][col]
+                if char.isdigit():
+                    start_col, end_col = self.get_number(row, col, schematic)
+                    num = int(schematic[row][start_col:end_col+1])
+                    for num_col in range(start_col, end_col + 1):
+                        numbers[(row, num_col)] = num
+                    col = end_col
+                elif char == '*':
+                    potential_gears.append((row, col))
+                col += 1
+            row += 1
+        return numbers, potential_gears
         
     def get_expected_a(self):
         return 4361
 
     def get_expected_b(self):
-        pass
+        return 467835
