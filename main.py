@@ -3,6 +3,7 @@ from Day1.day1 import Day1
 from Day2.day2 import Day2
 from Day3.day3 import Day3
 from Day4.day4 import Day4
+from Day5.day5 import Day5
 
 
 days = {
@@ -10,6 +11,7 @@ days = {
     2: Day2(),
     3: Day3(),
     4: Day4(),
+    5: Day5(),
 }
 
 
