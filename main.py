@@ -6,6 +6,7 @@ from Day4.day4 import Day4
 from Day5.day5 import Day5
 from Day6.day6 import Day6
 from Day7.day7 import Day7
+from Day8.day8 import Day8
 
 
 days = {
@@ -16,6 +17,7 @@ days = {
     5: Day5(),
     6: Day6(),
     7: Day7(),
+    8: Day8(),
 }
 
 
@@ -35,7 +37,8 @@ if __name__ == '__main__':
         day = days[day_num]
         get_solutions(day)
     else:
-        for day in days.values():
+        for num, day in days.items():
+            print(f'Day {num}')
             get_solutions(day)
             print()
     
