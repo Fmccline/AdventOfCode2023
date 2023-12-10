@@ -6,7 +6,7 @@ class Day6(Day):
     def __init__(self):
         Day.__init__(self, 6)
 
-    def get_records(self, input_data):
+    def get_records_a(self, input_data):
         times = []
         for time in input_data[0].split(':')[1].strip().split(' '):
             if time != '':
@@ -18,7 +18,7 @@ class Day6(Day):
         return list(zip(times, distances))
 
     def get_solution_a(self, input_data):
-        records = self.get_records(input_data)
+        records = self.get_records_a(input_data)
         power_win = 1
         for record in records:
             '''
@@ -37,11 +37,22 @@ class Day6(Day):
             power_win *= ways_to_win
         return power_win
 
+    def get_records_b(self, input_data):
+        time = int(input_data[0].split(':')[1].replace(' ', ''))
+        distance = int(input_data[1].split(':')[1].replace(' ', ''))
+        return time, distance
+
     def get_solution_b(self, input_data):
-        pass
+        ways_to_win = 0
+        T, D = self.get_records_b(input_data)
+        for t in range(T - 1):
+            d = t*(T - t)
+            if d > D:
+                ways_to_win += 1
+        return ways_to_win
         
     def get_expected_a(self):
         return 288
 
     def get_expected_b(self):
-        pass
+        return 71503
