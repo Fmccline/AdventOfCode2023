@@ -28,12 +28,22 @@ class Day9(Day):
             total_num += next_num
         return total_num
 
-
     def get_solution_b(self, input_data):
-        pass
+        total_num = 0
+        for line in input_data:
+            differences = [int(num) for num in line.split(' ')]
+            total_diffs = [differences]
+            while not self.is_done(differences):
+                differences = self.calculate_differences(differences)
+                total_diffs.append(differences)
+            next_num = 0
+            for diff in reversed(total_diffs):
+                next_num = diff[0] - next_num
+            total_num += next_num
+        return total_num
         
     def get_expected_a(self):
         return 114
 
     def get_expected_b(self):
-        pass
+        return 2
