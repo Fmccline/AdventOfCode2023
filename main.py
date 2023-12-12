@@ -9,6 +9,7 @@ from Day7.day7 import Day7
 from Day8.day8 import Day8
 from Day9.day9 import Day9
 from Day10.day10 import Day10
+from Day11.day11 import Day11
 
 
 days = {
@@ -22,6 +23,7 @@ days = {
     8: Day8(),
     9: Day9(),
     10: Day10(),
+    11: Day11(),
 }
 
 
