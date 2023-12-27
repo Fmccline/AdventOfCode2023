@@ -32,7 +32,7 @@ class Day16(Day):
             if path in visited_paths:
                 return
             visited_paths.add(path)
-            energized[row][col] = '#'
+            energized[row][col] = 1
             spot = grid[row][col]
             if spot == '-' and direction[0] != 0:
                 start = (row, col)
@@ -50,28 +50,56 @@ class Day16(Day):
             col += direction[1]
 
 
-    def get_solution_a(self, input_data):
-        grid = []
+    def get_total_energized(self, grid, start, direction):
         energized = []
-        for line in input_data:
-            grid.append(line.replace('\n', ''))
+
         for row in grid:
-            energized_row = ['.' for _ in row]
+            energized_row = [0 for _ in row]
             energized.append(energized_row)
 
-        self.energize_beam_path(grid, energized, (0, 0), (0, 1), set())
+        self.energize_beam_path(grid, energized, start, direction, set())
         total_energized = 0
         for row in energized:
-            total_energized += row.count('#')
+            total_energized += sum(row)
         
         return total_energized
-        
+
+
+    def get_solution_a(self, input_data):
+        grid = []
+        for line in input_data:
+            grid.append(line.replace('\n', ''))
+        return self.get_total_energized(grid, (0, 0), (0, 1))
+
 
     def get_solution_b(self, input_data):
-        pass
+        grid = []
+        for line in input_data:
+            grid.append(line.replace('\n', ''))
+        
+        MAX_ROWS = len(grid)
+        MAX_COLS = len(grid[0])
+
+        edges = []
+        # add top and bottom edges
+        for col in range(0, MAX_COLS):
+            edges.append(((0, col), (1, 0)))
+            edges.append(((MAX_ROWS - 1, col), (-1, 0)))
+        # add left and right edges
+        for row in range(0, MAX_ROWS):
+            edges.append(((row, 0), (0, 1)))
+            edges.append(((row, MAX_COLS - 1), (0, -1)))
+        
+        max_energized = 0
+        for edge in edges:
+            start = edge[0]
+            direction = edge[1]
+            total_energized = self.get_total_energized(grid, start, direction)
+            max_energized = max(max_energized, total_energized)
+        return max_energized
         
     def get_expected_a(self):
         return 46
 
     def get_expected_b(self):
-        pass
+        return 51
